@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'views/categories_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,30 +11,33 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DeliMeals',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: Colors.pink,
+          onPrimary: Colors.white,
+          secondary: Colors.amber,
+          onSecondary: Colors.white,
+          error: Colors.red,
+          onError: Colors.white,
+          surface: Color.fromRGBO(255, 254, 229, 1),
+          onSurface: Colors.black,
+        ),
+        textTheme: TextTheme(
+          titleLarge: TextStyle(
+            fontFamily: 'Raleway',
+            fontWeight: FontWeight.bold,
+            fontSize: 21,
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+          titleMedium: TextStyle(
+            fontFamily: 'RobotoCondensed',
+            fontSize: 20,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
       ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('DeliMeals'),
-      ),
-      body: Center(
-        child: Text('Navegar é preciso!!'),
-      ),
+      home: CategoriesView(),
     );
   }
 }
