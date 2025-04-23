@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/views/not_found_view.dart';
 import 'views/categories_view.dart';
 import 'views/categories_meals_view.dart';
 import 'views/meal_detail_view.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.categoriesMeals: (ctx) => CategoriesMealsView(),
         AppRoutes.mealDetail: (ctx) => MealDetailView(),
       },
+      onUnknownRoute: (settings) => MaterialPageRoute(builder: (_) {
+        return NotFoundView();
+      }),
     );
   }
 }
