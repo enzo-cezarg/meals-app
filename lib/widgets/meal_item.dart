@@ -53,6 +53,7 @@ class MealItem extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 26,
                         color: Colors.white,
+                        fontFamily: 'RobotoCondensed',
                       ),
                       softWrap: true,
                       overflow: TextOverflow.fade,
