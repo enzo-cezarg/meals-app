@@ -7,15 +7,7 @@ class CategoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Vamos Cozinhar?',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
-      body: GridView(
+    return GridView(
         padding: EdgeInsets.all(20),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
@@ -26,7 +18,6 @@ class CategoriesView extends StatelessWidget {
         children: dummyCategories.map((cat) {
           return CategoryItem(category: cat);
         }).toList(),
-      ),
-    );
+      );
   }
 }
