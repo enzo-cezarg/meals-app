@@ -81,15 +81,25 @@ class MealDetailView extends StatelessWidget {
                         ),
                         title: Text(meal.steps.elementAt(index)),
                       ),
-                      Divider(color: Colors.grey,),
+                      Divider(
+                        color: Colors.grey,
+                      ),
                     ],
                   );
                 },
               ),
             ),
-            SizedBox(height: 30,)
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pop(meal.title);
+        },
+        child: Icon(Icons.star),
       ),
     );
   }

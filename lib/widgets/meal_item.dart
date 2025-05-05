@@ -11,7 +11,13 @@ class MealItem extends StatelessWidget {
     Navigator.of(context).pushNamed(
       AppRoutes.mealDetail,
       arguments: meal
-    );
+    ).then((result) {
+      if(result == null) {
+        print('Sem resultado!');
+      } else {
+        print('O nome da refeição é $result.');
+      }
+    });
   }
 
   @override
