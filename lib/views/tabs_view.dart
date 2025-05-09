@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'categories_view.dart';
 import 'favorite_view.dart';
 import '../widgets/main_drawer.dart';
+import '../models/meal.dart';
 
 class TabsView extends StatefulWidget {
-  const TabsView({super.key});
+  const TabsView({required this.favoriteMeals, super.key});
+
+  final List<Meal> favoriteMeals;
 
   @override
   State<TabsView> createState() => _TabsViewState();
@@ -12,10 +15,22 @@ class TabsView extends StatefulWidget {
 
 class _TabsViewState extends State<TabsView> {
   int _selectedViewIndex = 0;
-  final List<Map<String, Object>> _views = [
-    {'title': 'Lista de Categorias', 'view': CategoriesView()},
-    {'title': 'Meus Favoritos', 'view': FavoriteView()},
-  ];
+  List<Map<String, Object>>? _views;
+
+  @override
+  void initState() {
+    super.initState();
+    _views = [
+      {
+        'title': 'Lista de Categorias',
+        'view': CategoriesView(),
+      },
+      {
+        'title': 'Meus Favoritos',
+        'view': FavoriteView(favoriteMeals: widget.favoriteMeals)
+      },
+    ];
+  }
 
   _selectView(int index) {
     setState(() {
@@ -28,14 +43,14 @@ class _TabsViewState extends State<TabsView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _views[_selectedViewIndex]['title'] as String,
+          _views![_selectedViewIndex]['title'] as String,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       drawer: MainDrawer(),
-      body: _views[_selectedViewIndex]['view'] as Widget,
+      body: _views![_selectedViewIndex]['view'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectView,
         backgroundColor: Theme.of(context).colorScheme.primary,

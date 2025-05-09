@@ -3,7 +3,6 @@ import 'models/settings.dart';
 import 'views/settings_view.dart';
 import 'views/not_found_view.dart';
 import 'views/tabs_view.dart';
-import 'views/categories_view.dart';
 import 'views/categories_meals_view.dart';
 import 'views/meal_detail_view.dart';
 import 'utils/app_routes.dart';
@@ -21,8 +20,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Meal> _availableMeals = dummyMeals;
+  List<Meal> _favoriteMeals = [];
 
   Settings settings = Settings();
+
+  bool _isFavorite(Meal meal) {
+    return _favoriteMeals.contains(meal);
+  }
 
   void _filterMeals(Settings settings) {
     setState(() {
@@ -39,6 +43,14 @@ class _MyAppState extends State<MyApp> {
             !filterVegan &&
             !filterVegetarian;
       }).toList();
+    });
+  }
+
+  void _toggleFavorite(Meal meal) {
+    setState(() {
+      _favoriteMeals.contains(meal)
+          ? _favoriteMeals.remove(meal)
+          : _favoriteMeals.add(meal);
     });
   }
 
@@ -75,10 +87,11 @@ class _MyAppState extends State<MyApp> {
       ),
       //home: CategoriesView(),
       routes: {
-        AppRoutes.home: (ctx) => TabsView(),
+        AppRoutes.home: (ctx) => TabsView(favoriteMeals: _favoriteMeals),
         AppRoutes.categoriesMeals: (ctx) =>
             CategoriesMealsView(meals: _availableMeals),
-        AppRoutes.mealDetail: (ctx) => MealDetailView(),
+        AppRoutes.mealDetail: (ctx) =>
+            MealDetailView(isFavorite: _isFavorite, onToggleFavorite: _toggleFavorite),
         AppRoutes.settings: (ctx) =>
             SettingsView(settings: settings, onSettingsChanged: _filterMeals),
       },
