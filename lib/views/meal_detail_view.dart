@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class MealDetailView extends StatelessWidget {
-  const MealDetailView({required this.isFavorite, required this.onToggleFavorite, super.key});
+  const MealDetailView(
+      {required this.isFavorite, required this.onToggleFavorite, super.key});
 
   final Function(Meal) onToggleFavorite;
   final bool Function(Meal) isFavorite;
@@ -39,19 +40,41 @@ class MealDetailView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         title: Text(meal.title),
         scrolledUnderElevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 250,
-              width: double.infinity,
-              child: Image.network(
-                meal.imageUrl,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              children: [
+                SizedBox(
+                  height: 250,
+                  width: double.infinity,
+                  child: Image.network(
+                    meal.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withValues(alpha: 0.05), // topo escuro
+                        Colors.transparent, // centro
+                        Colors.black.withValues(alpha: 0.4), // fundo escuro
+                      ],
+                      stops: [0.0, 0.5, 1.0],
+                    ),
+                  ),
+                ),
+              ],
             ),
             _createSectionTitle(context, 'Ingredientes'),
             _createSectionContainer(
@@ -59,13 +82,17 @@ class MealDetailView extends StatelessWidget {
                 itemCount: meal.ingredients.length,
                 itemBuilder: (ctx, index) {
                   return Card(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.primary,
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        vertical: 5,
+                        vertical: 10,
                         horizontal: 10,
                       ),
-                      child: Text(meal.ingredients.elementAt(index)),
+                      child: Text(
+                        meal.ingredients.elementAt(index),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary),
+                      ),
                     ),
                   );
                 },
